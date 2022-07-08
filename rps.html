@@ -6,36 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors!</title>
 </head>
-<body>
-
+<body>   
 <script>
 
 //this is where my JavaScript will go.
-
+// the computer will randomly pick 'rock, paper, or scissors'
 // user will enter 'rock, paper, or scissors' into a prompt
 
-// if the user does not enter anything into the prompt,
-// an alert will pop up, asking to submit 'rock, paper, or scissors'.
 
-// the computer will randomly pick 'rock, paper, or scissors'
+let gameOptions = Math.random();
+
+function randomSelection() {
+    if (gameOptions <= 0.3333) {
+        return"paper";
+    } else if (gameOptions >= 0.6666) {
+        return "rock";
+    } else {
+        return "scissors";
+    }
+}
+
+let computerSelection = randomSelection();
+
+
+
+
+
+let userStart = prompt("Welcome to the game! Please select one of the following: Rock, Paper, or Scissors",'');
+let playerSelection = userStart.toLowerCase();
+console.log(playerSelection);
+
+console.log(`Your choice is ${playerSelection}, the computer's choice is ${computerSelection}.`);
+
+
+
+
+
+
+//for (let i = 0; i < 5; i++) {
+ //   console.log(playRound(playerSelection, computerSelection));
+//}
+
+
+
+
+
+
+// THIS IS HELLA LONG AND THERE HAS TO BE A BETTER WAY BUT I'M SAVING JUST IN CASE.**
+//if (playerSelection === computerSelection){
+//        console.log("Tie!");
+//} else if (playerSelection === 'paper' && computerSelection === 'rock'){
+//    console.log("You win!");
+//} else if (playerSelection === 'rock' && computerSelection === 'scissors'){
+//    console.log("You win!");
+//} else if (playerSelection === 'scissors' && computerSelection === 'paper'){
+//    console.log("You win!");
+//}
+
+
 
 // the results will be compared and will have the following outcomes
-// rock beats scissors
-// paper beats rock
-// scissors beats paper
+// if playerSelection == computerSelection
+// then 'You tied! Try again.'
 
-//if the computer wins:
-//'you lost! try again.'
+// if playerSelection > computerSelection
+// then 'You won! Play again.'
 
-//if the user wins:
-//'you won! play again.'
+// if playerSelection < computerSelection
+// then 'You lose! Try again.'
+
+
 
 // available outcome messages:
-// 'You Lose! Paper beats Rock.'
-// 'You Lose! Rock beats Scissors.'
-// 'You Lose! Scissors beats Paper.'
+// 'You Lose! Paper beats Rock.' (Paper > Rock)
+// 'You Lose! Rock beats Scissors.' (Rock > Scissors)
+// 'You Lose! Scissors beats Paper.' (Scissors > Paper)
 // or
 // 'You Win! with the same instances above.'
+// or 'It\'s a tie! Try again.' ( any === any)
 // could read 'You ${outcome}!'???
 // variables we will work with: playerSelection and computerSelection
 
