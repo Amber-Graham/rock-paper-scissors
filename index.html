@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors!</title>
+</head>
+<body>   
+<script>
+
+// the computer will randomly pick 'rock, paper, or scissors' based off of the function
+// user will enter 'rock, paper, or scissors' into a prompt
+// user text will be converted to lower case
+// the console will log the choices that were returned by the computer
+
+const gameOptions = ["rock", "paper", "scissors"];
+const winners = [];
+
+
+
+//checking players choice and making sure they wont break the loop
+
+function game() {
+    for (let i = 0; i < 5; i++){
+    playRound(i);
+  }
+    trackWins();
+}
+
+
+function playRound(round) {
+    const playerSelection = playerChoice();
+    const computerSelection = computerChoice();
+    const winner = findWinner(playerSelection, computerSelection);
+    winners.push(winner);
+    logRound(playerSelection, computerSelection, winner, round);
+}
+
+function playerChoice() {
+    let input = prompt('Type Rock, Paper, or Scissors!');
+    input = input.toLowerCase();
+    return input;
+}
+
+function computerChoice() {
+    return gameOptions[Math.floor(Math.random()*gameOptions.length)];
+}
+
+function findWinner(playerInput, computerInput) {
+    if(playerInput === computerInput) {
+        return "Tie";
+    } else if (
+        (playerInput == "paper" && computerInput == "rock") ||
+        (playerInput == "rock" && computerInput == "scissors") || 
+        (playerInput == "scissors" && computerInput == "paper")
+        ) {
+        return "Player";
+    } else {
+        return "Computer";
+    } 
+  }  
+
+function trackWins() {
+    let playerWins = winners.filter((item) => item == "Player").length;
+    let computerWins = winners.filter((item) => item == "Computer").length;
+    let ties = winners.filter((item) => item == "Tie").length;
+    console.log('Results:');
+    console.log('Player Wins:', playerWins);
+    console.log('Computer Wins:', computerWins);
+    console.log('Ties:', ties);
+}
+
+function logRound(playerSelection, computerSelection, winner, round){
+        console.log('Round',round);
+        console.log('Player:',playerSelection);
+        console.log('Computer:',computerSelection);
+        console.log(winner, 'Won the Round.');
+}
+
+game();
+
+</script>
+    
+</body>
+</html>
