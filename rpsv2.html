@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors -- Version 2!</title>
+</head>
+<body>
+
+<script>
+
+const choice = ["rock", "paper", "scissors"];
+
+function game() {
+    playRound();
+}
+
+function playRound() {
+    const playerSelection = playerChoice();
+    const computerSelection = computerChoice();
+}
+
+function playerChoice(){
+    let input = prompt('Type Rock, Paper, or Scissors!');
+        input = input.toLowerCase();
+        return input;
+}
+
+function computerChoice() {
+    return gameOptions[Math.floor(Math.random()*gameOptions.length)];
+}
+
+game();
+
+
+
+
+
+
+
+</script>
+    
+</body>
+</html>

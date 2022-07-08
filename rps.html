@@ -14,88 +14,71 @@
 // user text will be converted to lower case
 // the console will log the choices that were returned by the computer
 
-let gameOptions = Math.random();
+const gameOptions = ["rock", "paper", "scissors"];
+const winners = [];
 
-function randomSelection() {
-    if (gameOptions <= 0.3333) {
-        return"paper";
-    } else if (gameOptions >= 0.6666) {
-        return "rock";
-    } else {
-        return "scissors";
-    }
+
+
+//checking players choice and making sure they wont break the loop
+
+function game() {
+    for (let i = 0; i < 5; i++){
+    playRound(i);
+  }
+    trackWins();
 }
 
-let computerSelection = randomSelection();
 
-let userStart = prompt("Welcome to the game! Please select one of the following: Rock, Paper, or Scissors",'');
-let playerSelection = userStart.toLowerCase();
-console.log(playerSelection);
-
-console.log(`Your choice is ${playerSelection}, the computer's choice is ${computerSelection}.`);
-
-//to play one round:
-function playRound(playerSelection, computerSelection) {
-    if(playerSelection === computerSelection) {
-        return "You tied! Try again."
-    } else if (playerSelection == "paper" && computerSelection == "rock" || playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "paper") {
-        return "You win! Play again."
-    } else {
-        return "You lose! Try again."
-    }
+function playRound(round) {
+    const playerSelection = playerChoice();
+    const computerSelection = computerChoice();
+    const winner = findWinner(playerSelection, computerSelection);
+    winners.push(winner);
+    logRound(playerSelection, computerSelection, winner, round);
 }
 
-// the results will be logged in the console for one round
+function playerChoice() {
+    let input = prompt('Type Rock, Paper, or Scissors!');
+    input = input.toLowerCase();
+    return input;
+}
 
-let result = playRound(playerSelection, computerSelection);
-console.log(result);
+function computerChoice() {
+    return gameOptions[Math.floor(Math.random()*gameOptions.length)];
+}
 
+function findWinner(playerInput, computerInput) {
+    if(playerInput === computerInput) {
+        return "Tie";
+    } else if (
+        (playerInput == "paper" && computerInput == "rock") ||
+        (playerInput == "rock" && computerInput == "scissors") || 
+        (playerInput == "scissors" && computerInput == "paper")
+        ) {
+        return "Player";
+    } else {
+        return "Computer";
+    } 
+  }  
 
-//for (let i = 0; i < 5; i++) {
- //   console.log(playRound(playerSelection, computerSelection));
-//}
+function trackWins() {
+    let playerWins = winners.filter((item) => item == "Player").length;
+    let computerWins = winners.filter((item) => item == "Computer").length;
+    let ties = winners.filter((item) => item == "Tie").length;
+    console.log('Results:');
+    console.log('Player Wins:', playerWins);
+    console.log('Computer Wins:', computerWins);
+    console.log('Ties:', ties);
+}
 
+function logRound(playerSelection, computerSelection, winner, round){
+        console.log('Round',round);
+        console.log('Player:',playerSelection);
+        console.log('Computer:',computerSelection);
+        console.log(winner, 'Won the Round.');
+}
 
-
-
-
-
-// THIS IS HELLA LONG AND THERE HAS TO BE A BETTER WAY BUT I'M SAVING JUST IN CASE.**
-//if (playerSelection === computerSelection){
-//        console.log("Tie!");
-//} else if (playerSelection === 'paper' && computerSelection === 'rock'){
-//    console.log("You win!");
-//} else if (playerSelection === 'rock' && computerSelection === 'scissors'){
-//    console.log("You win!");
-//} else if (playerSelection === 'scissors' && computerSelection === 'paper'){
-//    console.log("You win!");
-//}
-
-
-
-// the results will be compared and will have the following outcomes
-// if playerSelection == computerSelection
-// then 'You tied! Try again.'
-
-// if playerSelection > computerSelection
-// then 'You won! Play again.'
-
-// if playerSelection < computerSelection
-// then 'You lose! Try again.'
-
-
-
-// available outcome messages:
-// 'You Lose! Paper beats Rock.' (Paper > Rock)
-// 'You Lose! Rock beats Scissors.' (Rock > Scissors)
-// 'You Lose! Scissors beats Paper.' (Scissors > Paper)
-// or
-// 'You Win! with the same instances above.'
-// or 'It\'s a tie! Try again.' ( any === any)
-// could read 'You ${outcome}!'???
-// variables we will work with: playerSelection and computerSelection
-
-
+game();
 
 </script>
     
