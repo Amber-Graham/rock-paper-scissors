@@ -9,10 +9,10 @@
 <body>   
 <script>
 
-//this is where my JavaScript will go.
-// the computer will randomly pick 'rock, paper, or scissors'
+// the computer will randomly pick 'rock, paper, or scissors' based off of the function
 // user will enter 'rock, paper, or scissors' into a prompt
-
+// user text will be converted to lower case
+// the console will log the choices that were returned by the computer
 
 let gameOptions = Math.random();
 
@@ -28,19 +28,27 @@ function randomSelection() {
 
 let computerSelection = randomSelection();
 
-
-
-
-
 let userStart = prompt("Welcome to the game! Please select one of the following: Rock, Paper, or Scissors",'');
 let playerSelection = userStart.toLowerCase();
 console.log(playerSelection);
 
 console.log(`Your choice is ${playerSelection}, the computer's choice is ${computerSelection}.`);
 
+//to play one round:
+function playRound(playerSelection, computerSelection) {
+    if(playerSelection === computerSelection) {
+        return "You tied! Try again."
+    } else if (playerSelection == "paper" && computerSelection == "rock" || playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "paper") {
+        return "You win! Play again."
+    } else {
+        return "You lose! Try again."
+    }
+}
 
+// the results will be logged in the console for one round
 
-
+let result = playRound(playerSelection, computerSelection);
+console.log(result);
 
 
 //for (let i = 0; i < 5; i++) {
