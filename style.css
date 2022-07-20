@@ -1,0 +1,43 @@
+.results {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+    padding-bottom: 0px;
+    font-size: 24px;
+}
+
+.result-score {
+    font-size: 16px;
+    padding: 0px 8px;
+}
+
+.result-section {
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.selection {
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    transition: 150ms;
+}
+
+.selection:hover {
+    transform: scale(1.2);
+    color: rgb(114, 114, 114);
+}
+
+body {
+    background-color: rgb(225, 215, 250);
+}
