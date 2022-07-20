@@ -5,101 +5,98 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors!</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
-    <div id="results"></div>
-    
+  <div class="buttons"> 
+    <button class="selection" data-selection="rock">Rock</button>
+    <button class="selection" data-selection="paper">Paper</button>
+    <button class="selection" data-selection="scissors">Scissors</button>
+  </div>
+
+    <div class="results">
+        <div class="result-list">
+            You
+            <span class ="result-score" data-your-score>0</span>
+        </div>
+        <span class="result-list">
+            Computer
+            <span class="result-score" data-computer-score>0</span>
+        </div>
+    <div class="result-section" data-final-column></div>
+    </div>
 <script>
 
 // the computer will randomly pick 'rock, paper, or scissors' based off of the function
-// user will enter 'rock, paper, or scissors' into a prompt
-// user text will be converted to lower case
-// the console will log the choices that were returned by the computer
+// user will select 'rock, paper, or scissors'
+// the selections will be run through logic to see who won
+// the results will be returned
+// the score will be incremented by 1 depending on who won
+// once the score is incremented to 5, that player wins and will alert when it happens
 
+const selectionButtons = document.querySelectorAll('[data-selection]');
+const finalColumn = document.querySelector('[data-final-column]');
+const computerScoreSpan = document.querySelector('[data-computer-score');
+const yourScoreSpan = document.querySelector('[data-your-score')
+const SELECTIONS = [
+    {
+        name: "rock",
+        beats: "scissors"
+    },
+    {
+        name: "paper",
+        beats: "rock"
+    },
+    {
+        name: "scissors",
+        beats: "paper"
+    }
+];
 
-const buttons = document.querySelectorAll('button');
-const gameOptions = ["rock", "paper", "scissors"];
-const winners = [];
+selectionButtons.forEach(selectionButton => {
+    selectionButton.addEventListener('click', e => {
+    const selectionName = selectionButton.dataset.selection;
+    const selection = SELECTIONS.find(selection => selection.name === selectionName);
+    makeSelection(selection);
+  })
+})
 
-function game() {
-    for (let i = 0; i < 5; i++){ 
-    playerChoice();
-    playRound();
-  }
-   trackWins();
+function makeSelection(selection) {
+    const computerSelection = randomSelection();
+    const yourWinner = isWinner(selection, computerSelection)
+    const computerWinner = isWinner(computerSelection, selection)
+    console.log(selection);
+
+addSelectionResult(computerSelection, computerWinner);
+addSelectionResult(selection, yourWinner);
+
+if (yourWinner) incrementScore(yourScoreSpan)
+if (computerWinner) incrementScore(computerScoreSpan)
+
+if(yourScoreSpan.innerText == 5) alert('You Win!')
+if(computerScoreSpan.innerText == 5) alert('Computer Wins!')
 }
 
-function playRound(round) {
-    const playerSelection = playerChoice();
-    const computerSelection = computerChoice();
-    const winner = findWinner(playerSelection, computerSelection);
-    winners.push(winner);
-    logRound(playerSelection, computerSelection, winner, round);
+function incrementScore(scoreSpan) {
+    scoreSpan.innerText = parseInt(scoreSpan.innerText) + 1;
 }
 
-function playerChoice() {
-    buttons.forEach((buttons => {
-        buttons.addEventListener('click', (playRound) => {
-            console.log(buttons.id);
-    });
-    return buttons.id}));
-};
-
-function computerChoice() {
-    return gameOptions[Math.floor(Math.random()*gameOptions.length)];
+function addSelectionResult(selection, winner) {
+    const div = document.createElement('div')
+    div.textContent = selection.name;
+    div.classList.add('result-section')
+    finalColumn.after(div);
 }
 
-function findWinner(playerInput, computerInput) {
-    if(playerInput === computerInput) {
-        return "Tie";
-    } else if (
-        (playerInput == document.getElementById("paper") && computerInput == "rock") ||
-        (playerInput == document.getElementById("rock") && computerInput == "scissors") || 
-        (playerInput == document.getElementById("scissors") && computerInput == "paper")
-        ) {
-        return "Player";
-    } else {
-        return "Computer";
-    } 
-  }  
-
-function trackWins() {
-    let playerWins = winners.filter((item) => item == "Player").length;
-    let computerWins = winners.filter((item) => item == "Computer").length;
-    let ties = winners.filter((item) => item == "Tie").length;
-    console.log('Results:');
-    console.log('Player Wins:', playerWins);
-    console.log('Computer Wins:', computerWins);
-    console.log('Ties:', ties);
+function randomSelection() {
+    const randomIndex = Math.floor(Math.random() * SELECTIONS.length);
+    return SELECTIONS[randomIndex];
 }
 
-function logRound(playerSelection, computerSelection, winner, round){
-    const results = document.querySelector('#results');
-
-    const roundResults = document.createElement("h3");
-    roundResults.textContent = (`Round ${round}`);
-    results.appendChild(roundResults);
-
-    const playerResults = document.createElement("p");
-    playerResults.textContent = `Player: ${playerSelection}`;
-    results.appendChild(playerResults);
-
-    const computerResults = document.createElement("p");
-    computerResults.textContent = `Computer: ${computerSelection}`;
-    results.appendChild(computerResults);
-
-    const finalRoundResults = document.createElement("p");
-    finalRoundResults.textContent = `${winner} Won the Round.`;
-    results.appendChild(finalRoundResults);
-}
-
-game();
-
-</script>
+function isWinner(selection, opponentSelection) {
+    return selection.beats === opponentSelection.name;
     
+}
+</script>    
 </body>
 </html>
